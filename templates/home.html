@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoodWe | Energia Solar Inteligente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Efeitos dinâmicos adicionais */
+        .tech-item:hover i {
+            animation: pulse 0.5s ease-in-out;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar Atualizada -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo GoodWe" class="logo-img">
+            </div>
+
+            <div class="navbar-links">
+                <a href="https://br.goodwe.com/products">Produtos</a>
+                <a href="https://br.goodwe.com/faqs">Suporte</a>
+            </div>
+
+            <div class="navbar-actions">
+                <a href="{{ url_for('auth.login') }}" class="btn-login">Login</a>
+                <a href="{{ url_for('auth.register') }}" class="btn-register">Registrar</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section com Efeitos Especiais -->
+    <section class="hero">
+        <div class="glitch-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1><span class="hero-highlight">Futuro da Energia Solar</span> Inteligente</h1>
+                <p class="hero-subtitle">Monitoramento em tempo real, análise preditiva e controle total da sua geração de energia renovável.</p>
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <i class="fas fa-bolt"></i>
+                        <span>Energia Limpa</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-brain"></i>
+                        <span>IA Integrada</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-cloud"></i>
+                        <span>Cloud Computing</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-graphic">
+                <img src="{{ url_for('static', filename='images/goodwetech.png') }}" alt="Tecnologia GoodWe">
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Grid -->
+    <section class="stats-grid">
+        <div class="container">
+            <div class="stat-card tech-card">
+                <i class="fas fa-shield-alt"></i>
+                <span class="stat-value">99.9%</span>
+                <span class="stat-label">Segurança</span>
+            </div>
+            <div class="stat-card tech-card highlight">
+                <i class="fas fa-chart-line"></i>
+                <span class="stat-value">24/7</span>
+                <span class="stat-label">Monitoramento</span>
+            </div>
+            <div class="stat-card tech-card">
+                <i class="fas fa-tachometer-alt"></i>
+                <span class="stat-value">98%</span>
+                <span class="stat-label">Eficiência</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tecnologia Section -->
+    <section class="technology">
+        <div class="container">
+            <h2>Tecnologia Avançada</h2>
+            <div class="tech-features">
+                <div class="feature">
+                    <i class="fas fa-microchip"></i>
+                    <h3>Hardware de Ponta</h3>
+                    <p>Componentes de última geração para máxima eficiência energética.</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-robot"></i>
+                    <h3>Automação Inteligente</h3>
+                    <p>Sistemas que aprendem e se adaptam ao seu consumo.</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Controle Remoto</h3>
+                    <p>Gerencie seu sistema de qualquer lugar via aplicativo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand" style="text-align: left;">
+                    <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo GoodWe" class="logo-img">
+                    <p>Liderando a revolução da energia solar inteligente.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="https://br.goodwe.com/company-profile">Sobre Nós</a>
+                    <a href="https://br.goodwe.com/career">Carreiras</a>
+                    <a href="https://br.goodwe.com/contact-us">Contato</a>
+                    <a href="https://br.goodwe.com/news">Blog</a>
+                </div>
+            </div>
+            <p class="copyright">&copy; 2025 GoodWe. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
+    <!-- Script para efeitos interativos -->
+    <script>
+        // Efeito de partículas que seguem o mouse
+        document.querySelector('.hero').addEventListener('mousemove', (e) => {
+            const hero = document.querySelector('.hero');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            hero.style.setProperty('--mouse-x', x);
+            hero.style.setProperty('--mouse-y', y);
+        });
+
+        // Efeito de digitação no título (opcional)
+        const title = document.querySelector('.hero h1');
+        const originalText = title.innerHTML;
+        
+        function typeWriter() {
+            title.innerHTML = '';
+            let i = 0;
+            const speed = 50;
+            
+            function typing() {
+                if (i < originalText.length) {
+                    title.innerHTML += originalText.charAt(i);
+                    i++;
+                    setTimeout(typing, speed);
+                }
+            }
+            
+            typing();
+        }
+
+        // Descomente para ativar o efeito de digitação
+        // window.addEventListener('load', typeWriter);
+    </script>
+</body>
+</html>

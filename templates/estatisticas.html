@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estatísticas - SolarMind</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dashboard-body">
+    <!-- Top Navigation -->
+    <nav class="goodwe-navbar">
+        <div class="nav-container">
+            <div class="logo-container">
+                <img src="{{ url_for('static', filename='img/logo-goodwe-white.png') }}" alt="SolarMind" class="logo-img">
+            </div>
+            <nav class="nav-links">
+                <a href="{{ url_for('dash.dashboard') }}"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="#" class="active"><i class="fas fa-chart-bar"></i> Estatísticas</a>
+                <a href="#"><i class="fas fa-cog"></i> Configurações</a>
+            </nav>
+            <div class="nav-user">
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="user-info">
+                    <span class="username">{{ session['usuario'] }}</span>
+                    <a href="{{ url_for('auth.logout') }}" class="logout-link">
+                        Sair <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="stats-main">
+        <!-- Page Header -->
+        <section class="stats-header">
+            <h1><i class="fas fa-chart-pie"></i> Estatísticas Detalhadas</h1>
+            <div class="time-range">
+                <select id="period-select">
+                    <option value="7">Últimos 7 dias</option>
+                    <option value="30" selected>Últimos 30 dias</option>
+                    <option value="90">Últimos 3 meses</option>
+                    <option value="365">Último ano</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Summary Cards -->
+        <section class="stats-summary">
+            <div class="summary-card total-production">
+                <div class="card-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <div class="card-content">
+                    <h3>Produção Total</h3>
+                    <div class="metric-value">1,245 <span>kWh</span></div>
+                    <div class="metric-change positive">
+                        <i class="fas fa-arrow-up"></i> 18% vs período anterior
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-card avg-efficiency">
+                <div class="card-icon">
+                    <i class="fas fa-percentage"></i>
+                </div>
+                <div class="card-content">
+                    <h3>Eficiência Média</h3>
+                    <div class="metric-value">89.2 <span>%</span></div>
+                    <div class="metric-change positive">
+                        <i class="fas fa-arrow-up"></i> 2.5% vs período anterior
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-card money-saved">
+                <div class="card-icon">
+                    <i class="fas fa-piggy-bank"></i>
+                </div>
+                <div class="card-content">
+                    <h3>Economia Total</h3>
+                    <div class="metric-value">R$ 982,50</div>
+                    <div class="metric-change positive">
+                        <i class="fas fa-arrow-up"></i> 22% vs período anterior
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="stats-charts">
+            <!-- Daily Production Chart -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3><i class="fas fa-sun"></i> Produção Diária de Energia</h3>
+                    <div class="chart-actions">
+                        <button class="btn-export"><i class="fas fa-download"></i> Exportar</button>
+                    </div>
+                </div>
+                <canvas id="dailyChart"></canvas>
+            </div>
+
+            <!-- Performance Comparison -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3><i class="fas fa-chart-line"></i> Comparativo de Desempenho</h3>
+                </div>
+                <canvas id="comparisonChart"></canvas>
+            </div>
+
+            <!-- System Efficiency -->
+            <div class="chart-container half-width">
+                <div class="chart-header">
+                    <h3><i class="fas fa-tachometer-alt"></i> Eficiência do Sistema</h3>
+                </div>
+                <canvas id="efficiencyChart"></canvas>
+            </div>
+
+            <!-- Energy Consumption -->
+            <div class="chart-container half-width">
+                <div class="chart-header">
+                    <h3><i class="fas fa-plug"></i> Padrão de Consumo</h3>
+                </div>
+                <canvas id="consumptionChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Data Table -->
+        <section class="stats-table">
+            <div class="table-header">
+                <h3><i class="fas fa-table"></i> Dados Históricos</h3>
+                <div class="table-actions">
+                    <input type="text" id="search-data" placeholder="Filtrar dados...">
+                    <button class="btn-export"><i class="fas fa-file-csv"></i> CSV</button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Produção (kWh)</th>
+                            <th>Consumo (kWh)</th>
+                            <th>Eficiência</th>
+                            <th>Economia (R$)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>01/06/2023</td>
+                            <td>18.7</td>
+                            <td>15.2</td>
+                            <td>87%</td>
+                            <td>9,35</td>
+                        </tr>
+                        <!-- More rows would be dynamically generated -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="{{ url_for('static', filename='img/logo-goodwe-white.png') }}" alt="SolarMind">
+            </div>
+            <div class="footer-links">
+                <a href="#">Suporte Técnico</a>
+                <a href="#">Documentação</a>
+                <a href="#">Termos de Uso</a>
+                <a href="#">Política de Privacidade</a>
+            </div>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2023 SolarMind. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        
+           

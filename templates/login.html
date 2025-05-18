@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - SolarMind</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="auth-page">
+    <div class="auth-background">
+        <div class="gradient-circle blue"></div>
+        <div class="gradient-circle orange"></div>
+    </div>
+
+    <div class="auth-container">
+        <div class="auth-header">
+            <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo GoodWe" class="logo-img">
+            <h1>Bem-vindo de volta</h1>
+            <p>Acesse sua conta para gerenciar seu sistema solar</p>
+        </div>
+
+        <form method="POST" class="auth-form">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="alert alert-danger">
+                        {{ messages[0] }}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <div class="form-group">
+                <label for="username"><i class="fas fa-user"></i> Nome de usuário</label>
+                <input type="text" id="username" name="nome" placeholder="Digite seu usuário" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password"><i class="fas fa-lock"></i> Senha</label>
+                <input type="password" id="password" name="senha" placeholder="Digite sua senha" required>
+                <a href="#" class="forgot-password">Esqueceu a senha?</a>
+            </div>
+
+            <button type="submit" class="auth-btn">
+                <i class="fas fa-sign-in-alt"></i> Entrar
+            </button>
+
+            <div class="auth-footer">
+                Não tem conta? <a href="{{ url_for('auth.register') }}">Crie uma agora</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
